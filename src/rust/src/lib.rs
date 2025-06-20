@@ -11,14 +11,20 @@ fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<Rstr> {
     x.into_iter()
         .zip(y.into_iter())
         .map(|(xi, yi)| {
-            let coord = Coord {
-                x: xi.inner(),
-                y: yi.inner(),
-            };
-            let encoded = encode(coord, length);
-            match encoded {
-                Ok(encoded) => Rstr::from(encoded),
-                Err(_) => Rstr::na(),
+            let is_missing = xi.is_na() || yi.is_na();
+            match is_missing {
+                true => Rstr::na(),
+                false => {
+                    let coord = Coord {
+                        x: xi.inner(),
+                        y: yi.inner(),
+                    };
+                    let encoded = encode(coord, length);
+                    match encoded {
+                        Ok(encoded) => Rstr::from(encoded),
+                        Err(_) => Rstr::na(),
+                    }
+                }
             }
         })
         .collect::<Vec<Rstr>>()
