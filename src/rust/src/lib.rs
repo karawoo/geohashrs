@@ -44,10 +44,19 @@ fn as_direction(dir: String) -> Direction {
     }
 }
 
+/// Find neighbor of a geohash in the requested direction
+/// @export
+#[extendr]
+fn gh_neighbor(geohash: String, direction: String) -> String {
+    let dir = as_direction(direction);
+    neighbor(&geohash, dir).unwrap()
+}
+
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
     mod geohashrs;
     fn gh_encode;
+    fn gh_neighbor;
 }

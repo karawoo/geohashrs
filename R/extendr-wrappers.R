@@ -14,5 +14,9 @@ NULL
 #' @export
 gh_encode <- function(x, y, length) .Call(wrap__gh_encode, x, y, length)
 
+#' Find neighbor of a geohash in the requested direction
+#' @export
+gh_neighbor <- function(geohash, direction) .Call(wrap__gh_neighbor, geohash, direction)
+
 
 # nolint end
