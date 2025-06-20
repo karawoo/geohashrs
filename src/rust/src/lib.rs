@@ -1,5 +1,5 @@
 use extendr_api::prelude::*;
-use geohash::{encode, Coord};
+use geohash::{encode, neighbor, Coord, Direction};
 
 /// Print coordinate
 /// @export
@@ -28,6 +28,20 @@ fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<Rstr> {
             }
         })
         .collect::<Vec<Rstr>>()
+}
+
+fn as_direction(dir: String) -> Direction {
+    match dir.to_lowercase().as_str() {
+        "n" => Direction::N,
+        "ne" => Direction::NE,
+        "e" => Direction::E,
+        "se" => Direction::SE,
+        "s" => Direction::S,
+        "sw" => Direction::SW,
+        "w" => Direction::W,
+        "nw" => Direction::NW,
+        _ => throw_r_error("Invalid direction"),
+    }
 }
 
 // Macro to generate exports.
