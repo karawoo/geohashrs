@@ -18,5 +18,8 @@ gh_encode <- function(x, y, length) .Call(wrap__gh_encode, x, y, length)
 #' @export
 gh_neighbor <- function(geohash, direction) .Call(wrap__gh_neighbor, geohash, direction)
 
+#' Decode a geohash
+gh_decode <- function(geohash) .Call(wrap__gh_decode, geohash)
+
 
 # nolint end

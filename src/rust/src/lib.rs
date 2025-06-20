@@ -1,5 +1,5 @@
 use extendr_api::prelude::*;
-use geohash::{encode, neighbor, Coord, Direction};
+use geohash::{decode, encode, neighbor, Coord, Direction};
 
 /// Print coordinate
 /// @export
@@ -62,6 +62,13 @@ fn gh_neighbor(geohash: Strings, direction: String) -> Strings {
         .collect::<Strings>()
 }
 
+/// Decode a geohash
+#[extendr]
+fn gh_decode(geohash: String) -> Robj {
+    let (coord, x_err, y_err) = decode(&geohash).unwrap();
+    data_frame!(x = coord.x, y = coord.y, x_err = x_err, y_err = y_err)
+}
+
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
@@ -69,4 +76,5 @@ extendr_module! {
     mod geohashrs;
     fn gh_encode;
     fn gh_neighbor;
+    fn gh_decode;
 }
