@@ -5,6 +5,9 @@ use geohash::{encode, Coord};
 /// @export
 #[extendr]
 fn gh_encode(x: f64, y: f64, length: usize) -> String {
+    if length < 1 || length > 12 {
+        throw_r_error("`length` must be in [1, 12]")
+    }
     let coord = Coord { x, y };
     let encoded = encode(coord, length);
     encoded.unwrap()
