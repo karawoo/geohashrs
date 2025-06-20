@@ -16,7 +16,10 @@ fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<Rstr> {
                 y: yi.inner(),
             };
             let encoded = encode(coord, length);
-            Rstr::from(encoded.unwrap())
+            match encoded {
+                Ok(encoded) => Rstr::from(encoded),
+                Err(_) => Rstr::na(),
+            }
         })
         .collect::<Vec<Rstr>>()
 }
