@@ -53,7 +53,11 @@ fn gh_neighbor(geohash: Strings, direction: String) -> Strings {
         .into_iter()
         .map(|x| {
             let gh_str: &str = x.as_str();
-            neighbor(&gh_str, dir).unwrap()
+            let n = neighbor(&gh_str, dir);
+            match n {
+                Ok(res) => Rstr::from(res),
+                Err(_) => Rstr::na(),
+            }
         })
         .collect::<Strings>()
 }
