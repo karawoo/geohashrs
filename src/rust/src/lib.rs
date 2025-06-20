@@ -47,9 +47,15 @@ fn as_direction(dir: String) -> Direction {
 /// Find neighbor of a geohash in the requested direction
 /// @export
 #[extendr]
-fn gh_neighbor(geohash: String, direction: String) -> String {
+fn gh_neighbor(geohash: Strings, direction: String) -> Strings {
     let dir = as_direction(direction);
-    neighbor(&geohash, dir).unwrap()
+    geohash
+        .into_iter()
+        .map(|x| {
+            let gh_str: &str = x.as_str();
+            neighbor(&gh_str, dir).unwrap()
+        })
+        .collect::<Strings>()
 }
 
 // Macro to generate exports.
