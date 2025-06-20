@@ -64,9 +64,37 @@ fn gh_neighbor(geohash: Strings, direction: String) -> Strings {
 
 /// Decode a geohash
 #[extendr]
-fn gh_decode(geohash: String) -> Robj {
-    let (coord, x_err, y_err) = decode(&geohash).unwrap();
-    data_frame!(x = coord.x, y = coord.y, x_err = x_err, y_err = y_err)
+fn gh_decode(geohash: Strings) -> Robj {
+    let mut x_res = Vec::new();
+    let mut y_res = Vec::new();
+    let mut x_err = Vec::new();
+    let mut y_err = Vec::new();
+
+    for i in geohash.into_iter() {
+        let decoded = decode(&i);
+        match decoded {
+            Ok(res) => {
+                let (coord, xe, ye) = res;
+                x_res.push(Rfloat::from(coord.x));
+                y_res.push(Rfloat::from(coord.y));
+                x_err.push(Rfloat::from(xe));
+                y_err.push(Rfloat::from(ye));
+            }
+            Err(_) => {
+                x_res.push(Rfloat::na());
+                y_res.push(Rfloat::na());
+                x_err.push(Rfloat::na());
+                y_err.push(Rfloat::na());
+            }
+        }
+    }
+
+    data_frame!(
+        x = Doubles::from_values(x_res),
+        y = Doubles::from_values(y_res),
+        x_err = Doubles::from_values(x_err),
+        y_err = Doubles::from_values(y_err)
+    )
 }
 
 // Macro to generate exports.
