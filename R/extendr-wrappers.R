@@ -12,7 +12,7 @@ NULL
 
 #' Print coordinate
 #' @export
-gh_encode <- function(x, y) invisible(.Call(wrap__gh_encode, x, y))
+gh_encode <- function(x, y, length) .Call(wrap__gh_encode, x, y, length)
 
 
 # nolint end

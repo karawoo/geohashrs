@@ -4,7 +4,7 @@
 \alias{gh_encode}
 \title{Print coordinate}
 \usage{
-gh_encode(x, y)
+gh_encode(x, y, length)
 }
 \description{
 Print coordinate
