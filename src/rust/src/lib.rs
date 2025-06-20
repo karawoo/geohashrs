@@ -4,14 +4,17 @@ use geohash::{encode, Coord};
 /// Print coordinate
 /// @export
 #[extendr]
-fn gh_encode(x: Vec<f64>, y: Vec<f64>, length: usize) -> Vec<String> {
+fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<String> {
     if length < 1 || length > 12 {
         throw_r_error("`length` must be in [1, 12]")
     }
     x.into_iter()
         .zip(y.into_iter())
         .map(|(xi, yi)| {
-            let coord = Coord { x: xi, y: yi };
+            let coord = Coord {
+                x: xi.inner(),
+                y: yi.inner(),
+            };
             let encoded = encode(coord, length);
             encoded.unwrap()
         })
