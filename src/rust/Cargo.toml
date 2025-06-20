@@ -11,3 +11,4 @@ name = 'geohashrs'
 
 [dependencies]
 extendr-api = '*'
+geohash = "0.13.1"

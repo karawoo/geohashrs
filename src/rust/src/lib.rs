@@ -1,10 +1,12 @@
 use extendr_api::prelude::*;
+use geohash::{encode, Coord};
 
-/// Return string `"Hello world!"` to R.
+/// Print coordinate
 /// @export
 #[extendr]
-fn hello_world() -> &'static str {
-    "Hello world!"
+fn gh_encode(x: f64, y: f64) {
+    let coord = Coord { x, y };
+    rprintln!("coord:?");
 }
 
 // Macro to generate exports.
@@ -12,5 +14,5 @@ fn hello_world() -> &'static str {
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
     mod geohashrs;
-    fn hello_world;
+    fn gh_encode;
 }
