@@ -4,7 +4,7 @@ use geohash::{encode, Coord};
 /// Print coordinate
 /// @export
 #[extendr]
-fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<String> {
+fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<Rstr> {
     if length < 1 || length > 12 {
         throw_r_error("`length` must be in [1, 12]")
     }
@@ -16,9 +16,9 @@ fn gh_encode(x: Doubles, y: Doubles, length: usize) -> Vec<String> {
                 y: yi.inner(),
             };
             let encoded = encode(coord, length);
-            encoded.unwrap()
+            Rstr::from(encoded.unwrap())
         })
-        .collect::<Vec<String>>()
+        .collect::<Vec<Rstr>>()
 }
 
 // Macro to generate exports.
